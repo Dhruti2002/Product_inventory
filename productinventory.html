@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Enlighten Infosystems || And and Remove Products</title>
+        <link href="bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>
+                        Product Inventory Systems 
+                        <button type="button" id="addMoreButton" class="btn btn-primary float-end">Add More+</button>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form id="productForm" method="POST">
+                        <div class="add-more-mainForm">
+                            <div class="row">
+                                <div class="col-md-2 mb-3">
+                                    <label>Product Code</label>
+                                    <input type="text" class="form-control product-Code" placeholder="Enter Product Code" required>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label>Product Name</label>
+                                    <input type="text" class="form-control product-name" placeholder="Enter Product Name" required>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label>Selling Price</label>
+                                    <input type="number" class="form-control Selling-price" placeholder="Enter Selling Price" required>
+                                </div>
+                                <div class="col-md-2 mb-2">
+                                    <label>Quantity</label>
+                                    <input type="number" class="form-control quantity" placeholder="Enter Quantity" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="addRemoveButton">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white mt-3">Submit</button>
+                    </form>
+                    <div class="mt-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Product Code</th>
+                                    <th>Product Name</th>
+                                    <th>Selling Price</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="jquery.min.js"></script>
+        <script src="bootstrap.bundle.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var serialNumber = 1;
+
+                $(document).on('click', '#addMoreButton',function(){
+                        var htmlForm = $(".add-more-mainForm").first().clone();
+                        $(htmlForm).find("input[type=text], input[type=number]").val('');
+                        $(htmlForm).find(".addRemoveButton").html("<label for=''>&nbsp;</label><br/><a class='btn btn-danger remove'>Remove</a>");
+                        $(".add-more-mainForm").last().after(htmlForm);     
+                });
+                $(document).on('click', '.remove', function(e){
+                    e.preventDefault();
+                    $(this).parents(".add-more-mainForm").remove();ss
+                });
+
+                $("#productForm").submit(function(e){
+                    e.preventDefault();
+                    $(".add-more-mainForm").each(function(){
+                        var productCode = $(this).find(".product-Code").val();   
+                        var productName = $(this).find(".product-name").val();                     
+                        var sellingPrice = $(this).find(".Selling-price").val();
+                        var quantity = $(this).find(".quantity").val();
+                      
+                        var newRow = "<tr><td>" + serialNumber++ + "</td><td>" + productCode + "</td><td>" + productName + "</td><td>" + sellingPrice + "</td><td>" + quantity + "</td></tr>" ;
+                        $("#productTableBody").append(newRow);
+                    });
+
+                    $(".product-Code").val('');
+                    $(".product-name").val('');
+                    $(".selling-price").val('');
+                    $(".quantity").val('');
+                });
+            });
+        </script>
+    </body>
+</html>
